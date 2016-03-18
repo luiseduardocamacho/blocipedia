@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Sign In</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+  <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+
+</head>
+<body>
+<%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
+  <%= devise_error_messages! %>
+<div>
+<div class="container" >
+    <div class="col-md-6" >
+        <div id="logbox"  >
+            <form id="signup" >
+                <%= f.email_field :email, autofocus: true, type: :email, placeholder: "Email address", class: "input pass"%>
+                <%= f.password_field :password, autocomplete: "off", placeholder: "Password", class: "input pass"%><br/>
+                <%= f.label :remember_me, class: "remember-me" %> 
+                <%= f.check_box :remember_me, class: "checkbox-inline" %>
+                <%= f.submit "Login", class: "inputButton" %>
+              </form>
+            <% end %>
+            <%= render "devise/shared/links" %>
+        </div>
+
+    </div>
+</div>
+</div>
+
+</body>
+</html>
