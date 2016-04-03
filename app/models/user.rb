@@ -4,6 +4,10 @@ class User < ActiveRecord::Base
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable, :confirmable
 
+  has_many :wikis
+
+  default_scope { order('created_at DESC') }
+
          before_save { self.email = email.downcase }
 
          validates :password, presence: true, length: { minimum: 6 }, if: "password.nil?"
