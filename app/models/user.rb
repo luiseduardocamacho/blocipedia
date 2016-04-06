@@ -4,6 +4,8 @@ class User < ActiveRecord::Base
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable, :confirmable
 
+  after_initialize { self.role ||= :standard }
+
   has_many :wikis
 
   default_scope { order('created_at DESC') }
@@ -20,5 +22,6 @@ class User < ActiveRecord::Base
             length: { minimum: 8, maximum: 100 },
             format: { with: EMAIL_REGEX }
 
+  enum role: [:standard, :premium, :admin]
 
 end
