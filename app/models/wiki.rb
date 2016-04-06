@@ -5,6 +5,6 @@ class Wiki < ActiveRecord::Base
   validates :body, presence: true
   validates :user, presence: true
 
-  scope :visible_to, -> (user) { user ? all : where(public: true) }
+  scope :visible_to, -> (user) { user ? all : where(private: false) }
 
 end

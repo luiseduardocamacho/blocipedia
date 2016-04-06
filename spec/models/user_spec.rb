@@ -16,12 +16,83 @@ RSpec.describe User, type: :model do
   it {should validate_length_of(:password).is_at_least(8)}
 
   describe "attributes" do
-    describe User do
-      before :each do
-        @user = FactoryGirl.create(:user)
+
+      it "should respond to email" do
+        expect(user).to respond_to(:email)
       end
-      it "should have email" do
-        expect(@user).to be_valid
+
+      it "responds to role" do
+        expect(user).to respond_to(:role)
+      end
+
+      it "responds to admin?" do
+        expect(user).to respond_to(:admin?)
+      end
+
+      it "responds to standard?" do
+        expect(user).to respond_to(:standard?)
+      end
+
+      it "responds to premium?" do
+        expect(user).to respond_to(:premium?)
+      end
+    end
+
+  describe "roles" do
+
+    it "is standard by default" do
+      expect(user.role).to eql("standard")
+    end
+
+    context "standard user" do
+
+      it "should return true for #standard" do
+        expect(user.standard?).to be_truthy
+      end
+
+      it "should return false for #admin" do
+        expect(user.admin?).to be_falsy
+      end
+
+      it "should return false for #premium" do
+        expect(user.premium?).to be_falsy
+      end
+    end
+
+    context "admin user" do
+      before do
+         user.admin!
+       end
+
+      it "should return false for #standard" do
+        expect(user.standard?).to be_falsy
+      end
+
+      it "should return true for #admin" do
+        expect(user.admin?).to be_truthy
+      end
+
+      it "should return false for #premium" do
+        expect(user.premium?).to be_falsy
+      end
+    end
+
+    context "premium used" do
+
+      before do
+         user.premium!
+       end
+
+      it "should return false for #standard" do
+        expect(user.standard?).to be_falsy
+      end
+
+      it "should return false for #admin" do
+        expect(user.admin?).to be_falsy
+      end
+
+      it "should return true for #premium" do
+        expect(user.premium?).to be_truthy
       end
     end
   end

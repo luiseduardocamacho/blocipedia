@@ -34,9 +34,9 @@ before_action :authenticate_user!, except: [:index, :show]
 
   def update
       @wiki = Wiki.find(params[:id])
-      @wiki.assign_attributes(wiki_params)
-
-      if @wiki.save
+      #@wiki.assign_attributes(wiki_params)
+      authorize @wiki
+      if @wiki.update(wiki_params)
         flash[:notice] = "Wiki was saved."
         redirect_to @wiki
       else
