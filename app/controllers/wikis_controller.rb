@@ -30,6 +30,7 @@ before_action :authenticate_user!, except: [:index, :show]
 
   def edit
       @wiki = Wiki.find(params[:id])
+      authorize @wiki
   end
 
   def update
