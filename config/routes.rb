@@ -2,7 +2,13 @@ Rails.application.routes.draw do
 
   resources :wikis, only: [:new, :create, :show, :edit, :index, :update, :destroy]
 
+  resources :charges, only: [:new, :create]
+
   devise_for :users
+
+  resources :users, only: [:show]
+
+  post 'users/unsubscribe'
 
   get 'about' => 'welcome#about'
 

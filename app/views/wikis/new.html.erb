@@ -19,10 +19,12 @@
           <%= f.label :body %>
           <%= f.text_area :body, rows: 8, class: 'form-control', placeholder: "Enter wiki body" %>
         </div>
-        <div class="form-group">
-          <%= f.label :private %>
-          <%= f.check_box :private, class: 'checkbox' %>
-        </div>
+          <% if policy(:wiki).make_private? %>
+            <div class="form-group">
+              <%= f.label :private %>
+              <%= f.check_box :private, class: 'checkbox' %>
+            </div>
+            <%end%>
         <div class="form-group">
           <%= f.submit "Save", class: 'btn btn-success' %>
         </div>
