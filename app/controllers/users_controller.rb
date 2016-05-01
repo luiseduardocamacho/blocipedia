@@ -18,5 +18,16 @@ class UsersController < ApplicationController
       redirect_to wikis_path
     end
 
+    def premium
+      @user = User.find(params[:id])
+      @user.role = "premium"
+      if @user.save
+        flash[:notice] = "You have successfully changed the role of your user to Standard "
+      else
+        flash[:notice] = "There was an error changing the role of your user"
+      end
+      redirect_to wikis_path
+    end
+
   end
 end

@@ -4,5 +4,6 @@ FactoryGirl.define do
     password "MyString"
     password_confirmation "MyString"
     confirmed_at Date.today
+    role 'standard'
   end
 end
