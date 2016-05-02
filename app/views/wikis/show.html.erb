@@ -2,7 +2,7 @@
 
  <div class="row">
    <div class="col-md-8">
-     <p><%= @wiki.body %></p>
+     <p><%= markdown(@wiki.body) %></p>
       <small>
         submitted <%= time_ago_in_words(@wiki.created_at) %> ago by <%=@wiki.user.name %>
        </small>
