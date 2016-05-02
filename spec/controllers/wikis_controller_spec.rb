@@ -6,7 +6,7 @@ RSpec.describe WikisController, type: :controller do
 let(:my_user) { create(:user) }
 let(:my_wiki) {create (:wiki) }
 
-context "guest user" do
+context "guest user not signed in" do
 
   describe "GET #show" do
     it "returns http success" do
@@ -64,9 +64,96 @@ context "guest user" do
      end
 end
 
-context "signed-in user" do
+  context "Standard user with public wiki" do
+    before do
+      my_user.standard!
+      sign_in(my_user)
+      my_wiki.private = false
+      my_wiki.save
+    end
+
+      describe "GET #edit" do
+
+        it "returns http success" do
+          get :edit, {id: my_wiki.id}
+          expect(response).to have_http_status(:success)
+        end
+
+        it "renders the #edit view" do
+          get :edit, {id: my_wiki.id}
+          expect(response).to render_template :edit
+        end
+
+        it "assigs wiki to be updated to @wiki" do
+          get :edit, {id: my_wiki.id}
+          wiki_instance = assigns(:wiki)
+            expect(wiki_instance.id).to eq my_wiki.id
+            expect(wiki_instance.title).to eq my_wiki.title
+            expect(wiki_instance.body).to eq my_wiki.body
+        end
+      end
+
+      #it should render the show view
+
+  end
+
+  context "Standard user with private wiki" do
+    before do
+      my_user.standard!
+      sign_in(my_user)
+      my_wiki.private = true
+      my_wiki.save
+    end
+
+    describe "GET #edit" do
+
+      it "returns http redirect" do
+        get :edit, {id: my_wiki.id}
+        expect(response).to have_http_status(:redirect)
+      end
+
+      it "renders the #edit view" do
+        get :edit, {id: my_wiki.id}
+        expect(response).not_to render_template :edit
+      end
+    end
+      #it should prevent me from creating private wikis
+      #it should not render the show view
+      #it should prevent me from editing private wikis
+      #it should prevent me from updating private wikis
+  end
+
+  context "Premium user with private wiki" do
+    before do
+      my_user.premium!
+      sign_in(my_user)
+      my_wiki.private = true
+      my_wiki.save
+    end
+
+    describe "GET #edit" do
+
+      it "returns http success" do
+        get :edit, {id: my_wiki.id}
+        expect(response).to have_http_status(:success)
+      end
+
+      it "renders the #edit view" do
+        get :edit, {id: my_wiki.id}
+        expect(response).to render_template :edit
+      end
+    end
+      #it should render the show view
+      #it should allow to edit private wikis
+      #it should allow me to update private wikis
+  end
+
+context "Premium user with public wiki" do
      before do
+       my_user.premium!
        sign_in(my_user)
+       my_wiki.private = false
+       my_wiki.save
      end
 
      describe "GET #index" do

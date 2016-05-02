@@ -9,7 +9,7 @@
    <div class="col-md-4">
      <div>
        <%if policy(@user).premium_list?%>
-         <%=button_to "Go back to Standard", users_unsubscribe_path, {method: 'post', :params => params, class: 'btn btn-success', type:'button', style:'display:inline-block'} %><br>
+         <%=button_to "Go back to Standard", users_unsubscribe_path, {method: 'post', :params => params, class: 'btn btn-success', type:'button', style:'display:inline-block',data: { confirm: "Are you sure?" }} %><br>
       <%end%>
     </div>
      <%=button_to "Edit User", edit_user_registration_path, {method: 'get', class: 'btn btn-success', type:'button', style:'display:inline-block'}%>
