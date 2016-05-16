@@ -1,6 +1,7 @@
 class UsersController < ApplicationController
   def show
     @user = User.find(params[:id])
+    @allusers = User.all
     authorize @user
     respond_to do |format|
         format.html # show.html.erb
@@ -28,6 +29,5 @@ class UsersController < ApplicationController
       end
       redirect_to wikis_path
     end
-
   end
 end

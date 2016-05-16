@@ -1,6 +1,12 @@
 Rails.application.routes.draw do
 
-  resources :wikis, only: [:new, :create, :show, :edit, :index, :update, :destroy]
+  resources :wikis do
+    member  do
+      get :collaborators
+      put :add_collaborators
+      put :remove_collaborators
+    end
+  end
 
   resources :charges, only: [:new, :create]
 
@@ -9,6 +15,8 @@ Rails.application.routes.draw do
   resources :users, only: [:show]
 
   post 'users/unsubscribe'
+
+  #put 'users/add', 'users/remove'
 
   get 'about' => 'welcome#about'
 

@@ -7,6 +7,8 @@ class User < ActiveRecord::Base
   after_initialize { self.role ||= :standard }
 
   has_many :wikis
+  has_many :collaborations
+  has_many :wiki_collaborations, through: :collaborations, source: :wiki
 
   default_scope { order('created_at DESC') }
 
