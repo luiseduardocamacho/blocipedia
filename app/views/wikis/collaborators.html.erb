@@ -1,0 +1,38 @@
+<div class="row">
+  <div class="col-md-8">
+    <div class="media">
+      <div class="media-title">
+        <h1><%= @wiki.title %></h1>
+      </div>
+
+      <div class= "media-body">
+
+        <h2>Add Collaborators to the <%=link_to(@wiki.title, @wiki)%> Wiki</h2>
+
+        <table class="table table-bordered">
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Email</th>
+              <th>Give Access</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% @allusers.each do |user|%>
+            <tr>
+              <td><%=user.name%></td>
+              <td><%=user.email%></td>
+              <% if !Collaboration.where(user_id: user.id , wiki_id: @wiki.id).empty?%>
+                <td><%=button_to "Remove Collaborator", remove_collaborators_wiki_path, {method: 'put', params: { user_id: user.id }, class: 'btn btn-success', type:'button', style:'display:inline-block',data: { confirm: "Are you sure?" }} %></td>
+              <% else %>
+                <td><%=button_to "Add Collaborator", add_collaborators_wiki_path, {method: 'put', params: { user_id: user.id }, class: 'btn btn-success', type:'button', style:'display:inline-block',data: { confirm: "Are you sure?" }} %></td>
+              <% end %>
+            </tr>
+            <%end%>
+          </tbody>
+        </table>
+      </div>
+
+    </div>
+  </div>
+</div>
